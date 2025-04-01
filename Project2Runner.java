@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 
+// TODO clean up code, add ActionListener (different from MouseListener)
+// maybe a button that upgrades the "Portable Generators"?
 public class Project2Runner {
 
       /*
@@ -16,7 +18,8 @@ public class Project2Runner {
       * a JPanel, and a JFrame. The JFrame can be found in this file at line
       * ~46, with the JPanel found in "ResourceButton.java" at line 7, JButton in
       * the latter file at line 25, and the JComponent also in the mentioned file
-      * at line`76.
+      * at line ~76.
+      * TODO update the line numbers when done
       * 
       ******** 2D Graphics Requirement ********
       * My "ResourceButton.java" file has a "progress bar" made out of Graphics2D
@@ -32,7 +35,7 @@ public class Project2Runner {
       */
 
       public static void main(String[] args) {
-            // Constant
+            // Constant TODO program all components to not need these (except JFrame)
             final Dimension SIZE = new Dimension(1280, 720);
             final Dimension BIG = new Dimension(1920, 1080);
 
@@ -42,11 +45,13 @@ public class Project2Runner {
             f.setLayout(new GridLayout(4,1));
             f.setPreferredSize(SIZE); 
 
+            // Juryrigged centering of JPanel TODO make this actually centered
             JPanel lPanel = new JPanel();
             lPanel.setLayout(new GridLayout(1,2));
             lPanel.setPreferredSize(BIG);
             lPanel.add(new JPanel());
 
+            // TODO unjuryrig the label updating code
             JLabel label = new JLabel();
             label.setPreferredSize(BIG);
 

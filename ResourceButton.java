@@ -4,12 +4,13 @@ import java.awt.event.*;
 import java.lang.IllegalArgumentException;
 
 // Creates a button to the right of a loading bar
+// TODO rewrite the code with GridBagLayout to neaten up the design
 public class ResourceButton extends JPanel {
       // Objects
       private BarComp barComp;
       private JButton button;
 
-      // Floating point variables
+      // Floating point variables TODO replace this with GridBagLayout
       private double margin;        // (0, 1) non-inclusive
       
       // Interface with data
@@ -17,11 +18,14 @@ public class ResourceButton extends JPanel {
       private int max;
       private int cost;
       private int income;
+
+      private String str;
       
       // Constructor
       public ResourceButton() {
-            // Sets this component to use the box layout
-            setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+            // Sets this component to use the box layout TODO switch to GridBagLayout
+            // this.setLayout(new GridBagLayout());
+            this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 
             // Creates subcomponents
             barComp = new BarComp();
@@ -30,13 +34,15 @@ public class ResourceButton extends JPanel {
             button.addMouseListener(new MouseListener() {
                   @Override
                   public void mouseClicked(MouseEvent e) {
-                        if ((current < max) && (Data.subResource(cost)))
-                              current++;
-                        repaint();
+                        increment();
                   }
 
-                  @Override public void mouseEntered(MouseEvent e) {}
-                  @Override public void mouseExited(MouseEvent e) {}
+                  @Override public void mouseEntered(MouseEvent e) {
+                        button.setLabel("Cost: " + cost);
+                  }
+                  @Override public void mouseExited(MouseEvent e) {
+                        button.setLabel(str);
+                  }
                   @Override public void mousePressed(MouseEvent e) {}
                   @Override public void mouseReleased(MouseEvent e) {}
             });
@@ -119,6 +125,13 @@ public class ResourceButton extends JPanel {
             }
       }
 
+      // Allows me to increment the 'current' counter from anywhere else in the code
+      public void increment() {
+            if ((current < max) && (Data.subResource(cost)))
+                  current++;
+            repaint();
+      }
+
       // Setters
       // BarComponent options
       public void setBarColour(Color colour) {
@@ -139,7 +152,8 @@ public class ResourceButton extends JPanel {
 
       // Button options
       public void setLabel(String s) {
-            button.setLabel(s);
+            str = s;
+            button.setLabel(str);
       }
       public void setButtonForeground(Color c) {
             button.setForeground(c);

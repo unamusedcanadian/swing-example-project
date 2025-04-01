@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 // This class stores game data
+// TODO clean up this code
 final public class Data {
       private static int resource;
       private static JLabel label;
