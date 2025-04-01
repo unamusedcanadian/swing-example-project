@@ -8,13 +8,15 @@ public class Project2Runner {
       * Student ID: 501321307 
       * 
       ******** Project Description ********
-      * A little idle game made with swing components. TODO make this longer
-      *
+      * A little idle game made with swing components. Click the button to
+      * make more resources! Spend those resources to make more resources!
       * 
       *
       * 
       ******** Swing Requirement ********
-      * 
+      * My "ResourceButton.java" file utilizes two JComponents- a generic JComponent
+      * and a JButton. 
+      *
       * Describe in 1 paragraph how your program satisfies the requirement that
       * there is at least 3 unique components. Be clear to identify in what
       * files and the lines number (just the starting line is fine) that the
@@ -23,6 +25,8 @@ public class Project2Runner {
       * 
       * 
       ******** 2D Graphics Requirement ********
+      * My "ResourceButton.java" file has a "progress bar" made out of Graphics2D
+      * drawn shapes.
       *
       * Describe in 1 paragraph how your program satisfies the requirement that
       * there is at least 1 JPanel used for drawing something. Be clear to
@@ -31,6 +35,7 @@ public class Project2Runner {
       * 
       * 
       ******** Event Listener Requirement ********
+      * My "ResourceButton.java" file has events linked to clicking the button
       *
       * Describe in 1 paragraph how your program satisfies the requirement that
       * there is at least one ActionListener, and there is additionally at least
@@ -46,11 +51,7 @@ public class Project2Runner {
             JFrame f = new JFrame("Project Idle");  
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setLayout(new GridLayout(1,1));
-            f.setPreferredSize(SIZE);
-
-            PanelManager a = new PanelManager();
-            a.setPreferredSize(SIZE);
-            f.add(a);
+            f.setPreferredSize(SIZE); 
 
             // one instance of button class
             ResourceButton button = new ResourceButton();
@@ -58,6 +59,7 @@ public class Project2Runner {
             button.setBarColour(Color.BLUE);
             button.setBarBackground(Color.RED);
             button.setBorderColour(Color.BLACK);
+            button.setMax(10);
             button.setLabel("Testing");
 
             // one instance of button class
@@ -67,10 +69,11 @@ public class Project2Runner {
             button2.setBarBackground(Color.BLUE);
             button2.setBorderColour(Color.GREEN);
             button2.setMargin(0.5);
+            button2.setMax(5);
             button2.setLabel("Small");
 
-            a.addComp(button);
-            a.addComp(button2);
+            f.add(button);
+            f.add(button2);
 
             f.pack();
             f.setVisible(true);
