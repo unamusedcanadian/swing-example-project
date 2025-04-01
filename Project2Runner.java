@@ -35,38 +35,31 @@ public class Project2Runner {
       */
 
       public static void main(String[] args) {
-            // Constant TODO program all components to not need these (except JFrame)
-            final Dimension SIZE = new Dimension(1280, 720);
-            final Dimension BIG = new Dimension(1920, 1080);
-
             // JFrame with default layout
             JFrame f = new JFrame("Project Idle");  
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setLayout(new GridLayout(4,1));
-            f.setPreferredSize(SIZE); 
+            f.setPreferredSize(new Dimension(1280, 720)); 
+            f.setMinimumSize(new Dimension(480, 270));
 
-            // Juryrigged centering of JPanel TODO make this actually centered
-            JPanel lPanel = new JPanel();
-            lPanel.setLayout(new GridLayout(1,2));
-            lPanel.setPreferredSize(BIG);
-            lPanel.add(new JPanel());
-
-            // TODO unjuryrig the label updating code
+            // Makes a label, and centers it on the top of the screen
+            JPanel lPanel = new JPanel(new GridBagLayout());
             JLabel label = new JLabel();
-            label.setPreferredSize(BIG);
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.anchor = GridBagConstraints.CENTER;
+            lPanel.add(label, gbc);
 
             Data.setLabel(label);
             lPanel.add(label);
 
             // one instance of button class
             ResourceButton button = new ResourceButton();
-            button.setPreferredSize(BIG);
             button.setMax(10);
             button.setLabel("Portable Generator");
 
             // one instance of button class
             ResourceButton button2 = new ResourceButton();
-            button2.setPreferredSize(BIG);
             button2.setMax(5);
             button2.setCost(50);
             button2.setIncome(5);
@@ -74,7 +67,6 @@ public class Project2Runner {
 
             // one instance of button class
             ResourceButton button3 = new ResourceButton();
-            button3.setPreferredSize(BIG);
             button3.setBarColour(Color.BLUE);
             button3.setCost(1000);
             button3.setIncome(100);

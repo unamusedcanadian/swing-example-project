@@ -4,28 +4,24 @@ import java.awt.event.*;
 import java.lang.IllegalArgumentException;
 
 // Creates a button to the right of a loading bar
-// TODO rewrite the code with GridBagLayout to neaten up the design
 public class ResourceButton extends JPanel {
       // Objects
       private BarComp barComp;
       private JButton button;
 
-      // Floating point variables TODO replace this with GridBagLayout
-      private double margin;        // (0, 1) non-inclusive
-      
       // Interface with data
       private int current;
       private int max;
       private int cost;
       private int income;
 
+      // Keeps button names intact
       private String str;
       
       // Constructor
       public ResourceButton() {
-            // Sets this component to use the box layout TODO switch to GridBagLayout
-            // this.setLayout(new GridBagLayout());
-            this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+            // Sets this component to use the GridBagLayout
+            this.setLayout(new GridBagLayout());
 
             // Creates subcomponents
             barComp = new BarComp();
@@ -47,40 +43,30 @@ public class ResourceButton extends JPanel {
                   @Override public void mouseReleased(MouseEvent e) {}
             });
 
-            // adds it all together
-            this.add(barComp);
-            this.add(button);
+            // adds subcomponents to layout with specified size and constraints
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridx = 0;
+            c.gridy = 0;
+            c.gridwidth = 1;
+            c.gridheight = 1;
+            c.weightx = 0.66; 
+            c.weighty = 1;
+            c.fill = GridBagConstraints.BOTH;
+
+            this.add(barComp, c);
+
+            // TODO make the button not manipulate the gridbag
+            GridBagConstraints c2 = new GridBagConstraints();
+            c.gridx = 1;
+            c.gridwidth = 1;
+            c.weightx = 0.33;
+
+            this.add(button, c);
 
             // sets some default variables
-            margin = 0.66;
             max = 1;
             cost = 10;
             income = 1;
-      }
-
-      // Sets preferred size of all components
-      @Override
-      public void setPreferredSize(Dimension d) {
-            super.setPreferredSize(d);
-            this.setMaximumSize(this.getPreferredSize());
-
-            updateComponents();
-      }
-
-      // Updates the preferred size of the components
-      private void updateComponents() {
-            Dimension d = this.getPreferredSize();
-
-            int width = (int) d.getWidth(); 
-            int height = (int) d.getHeight();
-
-            int mWidth = (int) (width * margin);
-
-            barComp.setPreferredSize(new Dimension(width, height));
-            barComp.setMaximumSize(barComp.getPreferredSize());
-
-            button.setPreferredSize(new Dimension(width-mWidth, height));
-            button.setMaximumSize(button.getPreferredSize());
       }
 
       // The visual for the loading bar
@@ -163,17 +149,6 @@ public class ResourceButton extends JPanel {
       }
 
       // Other setters 
-      public void setMargin(double i) {
-            if (i > 0 && i < 1) {
-                  margin = i;
-                  updateComponents();
-            }
-            else {
-                  throw new IllegalArgumentException(
-                        "Margin must be between 0 and 1 non-inclusive"
-                  );
-            }
-      } 
       public void setMax(int i) {
             if (i > 0)
                   max = i;
