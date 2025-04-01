@@ -12,8 +12,11 @@ public class ResourceButton extends JPanel {
       // Floating point variables
       private double margin;        // (0, 1) non-inclusive
       
+      // Interface with data
       private int current;
       private int max;
+      private int cost;
+      private int income;
       
       // Constructor
       public ResourceButton() {
@@ -27,7 +30,7 @@ public class ResourceButton extends JPanel {
             button.addMouseListener(new MouseListener() {
                   @Override
                   public void mouseClicked(MouseEvent e) {
-                        if (current < max) 
+                        if ((current < max) && (Data.subResource(cost)))
                               current++;
                         repaint();
                   }
@@ -45,6 +48,8 @@ public class ResourceButton extends JPanel {
             // sets some default variables
             margin = 0.66;
             max = 1;
+            cost = 10;
+            income = 1;
       }
 
       // Sets preferred size of all components
@@ -65,7 +70,7 @@ public class ResourceButton extends JPanel {
 
             int mWidth = (int) (width * margin);
 
-            barComp.setPreferredSize(new Dimension(mWidth, height));
+            barComp.setPreferredSize(new Dimension(width, height));
             barComp.setMaximumSize(barComp.getPreferredSize());
 
             button.setPreferredSize(new Dimension(width-mWidth, height));
@@ -83,8 +88,8 @@ public class ResourceButton extends JPanel {
 
             public BarComp() {
                   super();
-                  barColour = Color.BLACK;
-                  barBackground = Color.WHITE;
+                  barColour = Color.GREEN;
+                  barBackground = Color.GRAY;
                   borderColour = Color.BLACK;
                   borderWidth = 4;
                   borderRad = 0;
@@ -159,9 +164,17 @@ public class ResourceButton extends JPanel {
             if (i > 0)
                   max = i;
       }
+      public void setCost(int i) {
+            if (i >= 0) 
+                  cost = i;
+      }
+      public void setIncome(int i) {
+            if (i > 0)
+                  income = i;
+      }
 
-      // Getter
-      public int getCurrent() {
-            return current;
+      // Getters
+      public int getIncome() {
+            return current*income;
       }
 }
