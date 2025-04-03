@@ -1,11 +1,10 @@
 import java.awt.*;
 import javax.swing.*;
 
-// This class stores game data
-// TODO clean up this code
+// Global variables and methods associated with them
 final public class Data {
-      private static int resource;
-      private static JLabel label;
+      private static int resource = 0;
+      private static JLabel label = new JLabel();
 
       public static int getResource() {
             return resource;
@@ -13,24 +12,25 @@ final public class Data {
 
       public static void setResource(int input) {
             resource = input;
-            label.setText("Power: " + resource);
       }
 
       public static void addResource(int input) {
             resource += input;
-            label.setText("Power: " + resource);
       }
 
       public static boolean subResource(int input) {
             final boolean valid = (resource >= input);
             if (valid)
                   resource -= input;
-            label.setText("Power: " + resource);
             return valid; 
       }
 
-      public static void setLabel(JLabel in) {
-            label = in;
+      public static JLabel getLabel() {
+            return label;
+      }
+
+      public static void updateLabel() {
+            label.setText("Power: " + resource);
       }
 
       private Data() {}

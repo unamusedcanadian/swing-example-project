@@ -1,11 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.IllegalArgumentException;
 
 // Creates a button to the right of a loading bar
+// TODO add an actionlistener (NOT mouselistener) 
 public class ResourceButton extends JPanel {
-      // Objects
+      // JComponents 
       private BarComp barComp;
       private JButton button;
 
@@ -15,7 +15,7 @@ public class ResourceButton extends JPanel {
       private int cost;
       private int income;
 
-      // Keeps button names intact
+      // Keeps button names intact while swapping
       private String str;
       
       // Constructor
@@ -43,30 +43,35 @@ public class ResourceButton extends JPanel {
                   @Override public void mouseReleased(MouseEvent e) {}
             });
 
-            // adds subcomponents to layout with specified size and constraints
-            GridBagConstraints c = new GridBagConstraints();
-            c.gridx = 0;
-            c.gridy = 0;
-            c.gridwidth = 1;
-            c.gridheight = 1;
-            c.weightx = 0.66; 
-            c.weighty = 1;
-            c.fill = GridBagConstraints.BOTH;
+            // prevents dotted lines from appearing
+            button.setFocusable(false);
 
+            // keeps button size rigid in the GridBagLayout
+            final Dimension d = new Dimension(100, 100);
+            button.setMinimumSize(d);
+            button.setPreferredSize(d);
+            button.setMaximumSize(d);
+
+            // adds subcomponents to layout with specified size and constraints
+            GridBagConstraints c = gbcMaker(0, 0, 1, 1, 0.8, 1);
+            c.fill = GridBagConstraints.BOTH;
             this.add(barComp, c);
 
-            // TODO make the button not manipulate the gridbag
-            GridBagConstraints c2 = new GridBagConstraints();
-            c.gridx = 1;
-            c.gridwidth = 1;
-            c.weightx = 0.33;
-
+            c = gbcMaker(1, 0, 1, 1, 0.2, 1);
+            c.fill = GridBagConstraints.BOTH;
+            c.anchor = GridBagConstraints.EAST;
             this.add(button, c);
+      } 
 
-            // sets some default variables
-            max = 1;
-            cost = 10;
-            income = 1;
+      // creates and returns a new GridBagConstraints object
+      private static GridBagConstraints gbcMaker(
+            int gx, int gy, int gw, int gh, double wx, double wy
+      ) {
+            GridBagConstraints c = new GridBagConstraints();
+            c.gridx = gx; c.gridy = gy;
+            c.gridwidth = gw; c.gridheight = gh;
+            c.weightx = wx; c.weighty = wy;
+            return c;
       }
 
       // The visual for the loading bar
@@ -89,7 +94,6 @@ public class ResourceButton extends JPanel {
 
             @Override
             public void paintComponent(Graphics g) {
-                  // TODO make this a progressive loading bar
                   super.paintComponent(g);
 
                   int width = this.getWidth();
@@ -100,7 +104,7 @@ public class ResourceButton extends JPanel {
                   Graphics2D g2d = (Graphics2D) g;
 
                   g2d.setColor(barBackground);
-                  g2d.fillRoundRect(pWidth, 0, width-pWidth, height, borderRad, borderRad);
+                  g2d.fillRoundRect(0, 0, width, height, borderRad, borderRad);
 
                   g2d.setColor(barColour);
                   g2d.fillRoundRect(0, 0, pWidth, height, borderRad, borderRad);
@@ -113,9 +117,13 @@ public class ResourceButton extends JPanel {
 
       // Allows me to increment the 'current' counter from anywhere else in the code
       public void increment() {
-            if ((current < max) && (Data.subResource(cost)))
+            // If the first condition fails, the second doesn't get tested
+            // preventing unfair deductions
+            if ((current < max) && (Data.subResource(cost))) {
                   current++;
-            repaint();
+                  Data.updateLabel();
+            }
+            this.repaint(); // updates the loading bar
       }
 
       // Setters

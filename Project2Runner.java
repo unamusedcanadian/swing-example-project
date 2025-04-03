@@ -32,10 +32,12 @@ public class Project2Runner {
       * the bar to increase relative to the "max" set in the button. This makes use
       * of a custom class implementing a MouseListener interface. Said object is defined
       * on line 27 to 39 of the previously mentioned file.
+      *
+      * As for the ActionListener,
       */
 
       public static void main(String[] args) {
-            // JFrame with default layout
+            // JFrame with Grid layout, 4 rows 1 column
             JFrame f = new JFrame("Project Idle");  
             f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             f.setLayout(new GridLayout(4,1));
@@ -44,18 +46,15 @@ public class Project2Runner {
 
             // Makes a label, and centers it on the top of the screen
             JPanel lPanel = new JPanel(new GridBagLayout());
-            JLabel label = new JLabel();
-
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.anchor = GridBagConstraints.CENTER;
-            lPanel.add(label, gbc);
-
-            Data.setLabel(label);
-            lPanel.add(label);
+            lPanel.add(Data.getLabel(), gbc);
 
             // one instance of button class
             ResourceButton button = new ResourceButton();
             button.setMax(10);
+            button.setCost(10);
+            button.setIncome(1);
             button.setLabel("Portable Generator");
 
             // one instance of button class
@@ -68,6 +67,7 @@ public class Project2Runner {
             // one instance of button class
             ResourceButton button3 = new ResourceButton();
             button3.setBarColour(Color.BLUE);
+            button3.setMax(1);
             button3.setCost(1000);
             button3.setIncome(100);
             button3.setLabel("Nuclear Reactor");
@@ -78,10 +78,12 @@ public class Project2Runner {
             f.add(button3);
 
             Data.setResource(10);
+            Data.updateLabel();
 
             f.pack();
             f.setVisible(true);
 
+            // Loop that runs the game
             while (true) {
                   try { Thread.sleep(1000); }
                   catch(InterruptedException ex) {
@@ -90,6 +92,7 @@ public class Project2Runner {
                   Data.addResource(button.getIncome());
                   Data.addResource(button2.getIncome());
                   Data.addResource(button3.getIncome());
+                  Data.updateLabel();
             }
       }
 }
