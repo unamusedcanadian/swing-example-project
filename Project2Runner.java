@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 // TODO clean up code, add ActionListener (different from MouseListener)
 // maybe a button that upgrades the "Portable Generators"?
@@ -37,62 +38,7 @@ public class Project2Runner {
       */
 
       public static void main(String[] args) {
-            // JFrame with Grid layout, 4 rows 1 column
-            JFrame f = new JFrame("Project Idle");  
-            f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            f.setLayout(new GridLayout(4,1));
-            f.setPreferredSize(new Dimension(1280, 720)); 
-            f.setMinimumSize(new Dimension(480, 270));
+            App frame = new App("Project Idle"); 
 
-            // Makes a label, and centers it on the top of the screen
-            JPanel lPanel = new JPanel(new GridBagLayout());
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.anchor = GridBagConstraints.CENTER;
-            lPanel.add(Data.getLabel(), gbc);
-
-            // one instance of button class
-            ResourceButton button = new ResourceButton();
-            button.setMax(10);
-            button.setCost(10);
-            button.setIncome(1);
-            button.setLabel("Portable Generator");
-
-            // one instance of button class
-            ResourceButton button2 = new ResourceButton();
-            button2.setMax(5);
-            button2.setCost(50);
-            button2.setIncome(5);
-            button2.setLabel("Hydroelectric Dam");
-
-            // one instance of button class
-            ResourceButton button3 = new ResourceButton();
-            button3.setBarColour(Color.BLUE);
-            button3.setMax(1);
-            button3.setCost(1000);
-            button3.setIncome(100);
-            button3.setLabel("Nuclear Reactor");
-
-            f.add(lPanel);
-            f.add(button);
-            f.add(button2);
-            f.add(button3);
-
-            Data.setResource(10);
-            Data.updateLabel();
-
-            f.pack();
-            f.setVisible(true);
-
-            // Loop that runs the game
-            while (true) {
-                  try { Thread.sleep(1000); }
-                  catch(InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                  }
-                  Data.addResource(button.getIncome());
-                  Data.addResource(button2.getIncome());
-                  Data.addResource(button3.getIncome());
-                  Data.updateLabel();
-            }
       }
 }

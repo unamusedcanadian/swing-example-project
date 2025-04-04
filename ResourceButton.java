@@ -27,6 +27,7 @@ public class ResourceButton extends JPanel {
             barComp = new BarComp();
             button = new JButton();
             
+            // Adds a discreet mouse listener to the button
             button.addMouseListener(new MouseListener() {
                   @Override
                   public void mouseClicked(MouseEvent e) {
@@ -83,7 +84,8 @@ public class ResourceButton extends JPanel {
             private int borderWidth;
             private int borderRad;
 
-            public BarComp() {
+            // Only the superclass can call this
+            private BarComp() {
                   super();
                   barColour = Color.GREEN;
                   barBackground = Color.GRAY;
@@ -119,9 +121,8 @@ public class ResourceButton extends JPanel {
       public void increment() {
             // If the first condition fails, the second doesn't get tested
             // preventing unfair deductions
-            if ((current < max) && (Data.subResource(cost))) {
+            if ((current < max) && (App.subResource(cost))) {
                   current++;
-                  Data.updateLabel();
             }
             this.repaint(); // updates the loading bar
       }
