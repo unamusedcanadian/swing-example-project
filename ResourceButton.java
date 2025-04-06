@@ -3,7 +3,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 // Creates a button to the right of a loading bar
-// TODO add an actionlistener (NOT mouselistener) 
 public class ResourceButton extends JPanel {
       // JComponents 
       private BarComp barComp;
@@ -131,18 +130,23 @@ public class ResourceButton extends JPanel {
       // BarComponent options
       public void setBarColour(Color colour) {
             barComp.barColour = colour;
+            repaint();
       }
       public void setBarBackground(Color colour) {
             barComp.barBackground = colour;
+            repaint();
       }
       public void setBorderColour(Color colour) {
             barComp.borderColour = colour;
+            repaint();
       }
       public void setBorderWidth(int i) {
             barComp.borderWidth = i;
+            repaint();
       }
       public void setBarRadius(int i) {
             barComp.borderRad = i;
+            repaint();
       }
 
       // Button options

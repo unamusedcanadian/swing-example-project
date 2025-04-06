@@ -3,6 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
 
+// Creates the application
 public class App extends JFrame {
       // Static variables
       private static int resource;
@@ -27,9 +28,26 @@ public class App extends JFrame {
             GridBagConstraints gbc = new GridBagConstraints();
 
             // Creates and formats JTextField
-            // TODO make this *not* stretch vertically
             JTextField textField = new JTextField(7);
-            textField.addActionListener(new ColourChanger());
+            textField.addActionListener(new ActionListener() {
+                  // Whenever enter is pressed
+                  public void actionPerformed(ActionEvent evt) {
+                        String s = textField.getText();
+                        Color c = null;
+                        // See if the input is a valid colour hex code
+                        try {
+                              c = new Color(Integer.parseInt(s, 16));
+                        } catch(Exception e) {
+                              // If not, do nothing
+                              return;
+                        }
+                        // If so, make all the bars that colour
+                        for (Object o : buttons) {
+                              ResourceButton b = (ResourceButton) o;
+                              b.setBarColour(c);
+                        }
+                  }
+            });
             gridBagPanel1.add(textField, gbc);
 
             // Creates and formats JLabel
@@ -62,9 +80,10 @@ public class App extends JFrame {
 
             // Add ResourceButtons and formatted JPanel to JFrame
             this.add(topLayerSplit);
-            this.add(b1);
-            this.add(b2);
-            this.add(b3);
+            for (Object o : buttons) {
+                  ResourceButton b = (ResourceButton) o;
+                  this.add(b);
+            }
 
             resource = 10; 
             label.setText("Power: " + resource);
@@ -75,6 +94,7 @@ public class App extends JFrame {
             update();
       }
 
+      // Makes the creation of ResourceButton objects a little more discreet
       private ResourceButton makeButton(int max, int cost, int income) {
             ResourceButton b = new ResourceButton();
             b.setMax(max);
@@ -83,6 +103,7 @@ public class App extends JFrame {
             return b;
       }
 
+      // Update loop for the game that runs every second
       private void update() {
             while (true) {
                   try { Thread.sleep(1000); }
@@ -97,6 +118,7 @@ public class App extends JFrame {
             }
       }
 
+      // API for other classes to interact with resource
       public static boolean subResource(int input) {
             boolean valid = (resource >= input);
             if (valid) {
@@ -104,15 +126,6 @@ public class App extends JFrame {
                   label.setText("Power: " + resource);
             }
             return valid;
-      }
-
-      private class ColourChanger implements ActionListener {
-            public void actionPerformed(ActionEvent e) {
-                  for (Object o : buttons) {
-                        ResourceButton b = (ResourceButton) o;
-                        b.setBarColour(Color.RED);
-                  }
-            }
       }
 }
 
