@@ -128,4 +128,3 @@ public class App extends JFrame {
             return valid;
       }
 }
-
